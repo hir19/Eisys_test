@@ -10,7 +10,7 @@ RUN apt-get update \
     zip \
     git
 
-RUN docker-php-ext-install zip
+RUN docker-php-ext-install zip pdo_mysql
 
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
 RUN apt-get install -y nodejs
@@ -27,8 +27,5 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 
 COPY 000-default.conf /etc/apache2/sites-enabled/
 RUN a2enmod rewrite
-
-ARG APP_ENV=development
-ENV APP_ENV=$APP_ENV
 
 WORKDIR /var/www/html
