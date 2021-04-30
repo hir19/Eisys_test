@@ -47,6 +47,7 @@ class Product extends Model
                 self::CATEGORY_TABLE . '.name as category_name',
                 self::BRAND_TABLE . '.id as brand_id',
                 self::BRAND_TABLE . '.name as brand_name',
+                self::PRODUCT_TABLE . '.id as product_id',
                 self::PRODUCT_TABLE . '.name',
                 self::PRODUCT_TABLE . '.price',
                 self::PRODUCT_TABLE . '.quantity',
@@ -66,8 +67,36 @@ class Product extends Model
             ->leftJoin(self::BRAND_TABLE, self::BRAND_TABLE . '.id', self::PRODUCT_TABLE . '.brand_id')
             ->whereNull(self::PRODUCT_TABLE . '.deleted_at')
             // ->get();
-            // ->paginate(15);
-            ->simplePaginate(15);
+            ->paginate(15);
+            // ->simplePaginate(15);
+    }
+
+    public static function getProductById($product_id)
+    {
+        return DB::table(self::PRODUCT_TABLE)
+            ->select(
+                self::CATEGORY_TABLE . '.name as category_name',
+                self::BRAND_TABLE . '.name as brand_name',
+                self::PRODUCT_TABLE . '.name',
+                self::PRODUCT_TABLE . '.price',
+                self::PRODUCT_TABLE . '.quantity',
+                self::PRODUCT_TABLE . '.image_path1',
+                self::PRODUCT_TABLE . '.image_path2',
+                self::PRODUCT_TABLE . '.image_path3',
+                self::PRODUCT_TABLE . '.image_path4',
+                self::PRODUCT_TABLE . '.image_path5',
+                self::PRODUCT_TABLE . '.image_title1',
+                self::PRODUCT_TABLE . '.image_title2',
+                self::PRODUCT_TABLE . '.image_title3',
+                self::PRODUCT_TABLE . '.image_title4',
+                self::PRODUCT_TABLE . '.image_title5',
+                self::PRODUCT_TABLE . '.description',
+                )
+            ->where(self::PRODUCT_TABLE . '.id', $product_id)
+            ->leftJoin(self::CATEGORY_TABLE, self::CATEGORY_TABLE . '.id', self::PRODUCT_TABLE . '.category_id')
+            ->leftJoin(self::BRAND_TABLE, self::BRAND_TABLE . '.id', self::PRODUCT_TABLE . '.brand_id')
+            ->whereNull(self::PRODUCT_TABLE . '.deleted_at')
+            ->first();
     }
 
 }

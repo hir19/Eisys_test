@@ -9,14 +9,14 @@
                     <div class="d-flex flex-row flex-wrap">
                         @foreach ($products as $product)
                             <div>
-                                商品名：{{ $product->name }}<br>
+                                <a href="{{ route('shop.detail', ['product_id' => $product->product_id]) }}" target="_blank" rel="noopener">
+                                    商品名：{{ $product->name }}<br>
+                                </a>
                                 価格：{{ $product->price }}円<br>
                                 ブランド名：{{ $product->brand_name }}<br>
                                 種類：{{ $product->category_name }}<br>
                                 在庫数：{{ $product->quantity }}<br>
-                                <img src="/image/{{ $product->image_path1 }}" name="{{ $product->image_title1 }}" alt=""
-                                    class="incart"><br>
-                                商品説明：{{ $product->description }}
+                                <img src="/image/{{ $product->image_path1 }}" name="{{ $product->image_title1 }}" alt=""><br>
                             </div>
                         @endforeach
                     </div>

@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Shop;
 
 use App\Http\Controllers\Controller;
 // use App\Http\Requests\Shop\IndexRequest;
+use App\Http\Requests\Shop\DetailRequest;
 use App\Services\Shop\ShopService;
-use Illuminate\Pagination\Paginator;
 
 class ShopController extends Controller
 {
@@ -18,12 +18,19 @@ class ShopController extends Controller
     }
 
     public function Index()
-    // public function Index(IndexRequest $request)
     {
         $products = $this->shop_service
-            ->test();
+            ->index();
 
         return view(('shop.index'), compact('products'));
+    }
+
+    public function Detail(DetailRequest $request)
+    {
+        $product = $this->shop_service
+            ->detail($request->product_id);
+
+        return view(('shop.detail'), compact('product'));
     }
 
 }

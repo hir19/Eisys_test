@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::namespace('Shop')->name('shop.')->group(function() {
     Route::get('/', 'ShopController@index')->name('index');
+    Route::get('/detail/{product_id}', 'ShopController@detail')->name('detail');
+    // Route::get('/cart', 'ShopController@myCart')->name('cart')->middleware('auth');
 });
 
 Auth::routes();
