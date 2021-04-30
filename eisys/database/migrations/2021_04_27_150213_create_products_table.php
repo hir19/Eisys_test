@@ -33,6 +33,7 @@ class CreateProductsTable extends Migration
             $table->string('image_path5');
             $table->string('image_title5');
             $table->string('description')->nullable()->comment('商品説明');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -2,10 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Order;
+use App\Models\Product;
 use Faker\Generator as Faker;
 
-$factory->define(Order::class, function (Faker $faker) {
+$factory->define(Product::class, function (Faker $faker) {
     return [
         'name' => $faker->firstName,
         'category_id' => $faker->numberBetween($min = 1, $max = 4),

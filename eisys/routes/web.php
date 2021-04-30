@@ -13,8 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::namespace('Shop')->name('shop.')->group(function() {
+    Route::get('/', 'ShopController@index')->name('index');
 });
 
 Auth::routes();
