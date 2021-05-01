@@ -15,13 +15,27 @@ class AdminsTableSeeder extends Seeder
 
         DB::table('admins')->insert([
             [
+                'name' => '最高管理者',
+                'username' => 'system',
+                'email' => 'admin@test.test',
+                'email_verified_at' => date('Y-m-d H:i:s'),
+                'password' => Hash::make('test1'),
+                'role_id' => 1,
+                'shop_id' => 0,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+        ]);
+
+        DB::table('admins')->insert([
+            [
                 'name' => '管理者',
                 'username' => 'admin',
                 'email' => 'admin@test.test',
                 'email_verified_at' => date('Y-m-d H:i:s'),
                 'password' => Hash::make('test1'),
-                'role_id' => 1,
-                'shop_id' => null,
+                'role_id' => 2,
+                'shop_id' => 1,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -34,8 +48,8 @@ class AdminsTableSeeder extends Seeder
                 'email' => 'animete@test.test',
                 'email_verified_at' => date('Y-m-d H:i:s'),
                 'password' => Hash::make('test1'),
-                'role_id' => 2,
-                'shop_id' => 1,
+                'role_id' => 3,
+                'shop_id' => 2,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],

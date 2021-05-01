@@ -12,6 +12,7 @@ class Product extends Model
 
     const PRODUCT_TABLE = 'products';
     const CATEGORY_TABLE = 'categories';
+    const SHOP_TABLE = 'shops';
     const BRAND_TABLE = 'brands';
     const TAG_TABLE = 'tags';
     const PRODUCT_TAG_RELATION_TABLE = 'product_tag_relations';
@@ -66,6 +67,35 @@ class Product extends Model
         ];
     }
 
+    private static function displayDataInAdmin()
+    {
+        return [
+            self::CATEGORY_TABLE . '.id as category_id',
+            self::CATEGORY_TABLE . '.name as category_name',
+            self::BRAND_TABLE . '.id as brand_id',
+            self::BRAND_TABLE . '.name as brand_name',
+            self::SHOP_TABLE . '.id as shop_id',
+            self::SHOP_TABLE . '.name as shop_name',
+            self::PRODUCT_TABLE . '.id as product_id',
+            self::PRODUCT_TABLE . '.name',
+            self::PRODUCT_TABLE . '.price',
+            self::PRODUCT_TABLE . '.quantity',
+            self::PRODUCT_TABLE . '.image_path1',
+            self::PRODUCT_TABLE . '.image_path2',
+            self::PRODUCT_TABLE . '.image_path3',
+            self::PRODUCT_TABLE . '.image_path4',
+            self::PRODUCT_TABLE . '.image_path5',
+            self::PRODUCT_TABLE . '.image_title1',
+            self::PRODUCT_TABLE . '.image_title2',
+            self::PRODUCT_TABLE . '.image_title3',
+            self::PRODUCT_TABLE . '.image_title4',
+            self::PRODUCT_TABLE . '.image_title5',
+            self::PRODUCT_TABLE . '.description',
+            self::PRODUCT_TABLE . '.created_at',
+            self::PRODUCT_TABLE . '.updated_at',
+        ];
+    }
+
     public static function getAllProducts()
     {
         $display = self::displayData();
@@ -78,7 +108,7 @@ class Product extends Model
             ->whereNull(self::PRODUCT_TABLE . '.deleted_at');
     }
 
-    public static function getProductById($product_id)
+    public static function getProductById($product_id, $admin = null)
     {
         $display = self::displayData();
 
@@ -87,7 +117,9 @@ class Product extends Model
             ->where(self::PRODUCT_TABLE . '.id', $product_id)
             ->leftJoin(self::CATEGORY_TABLE, self::CATEGORY_TABLE . '.id', self::PRODUCT_TABLE . '.category_id')
             ->leftJoin(self::BRAND_TABLE, self::BRAND_TABLE . '.id', self::PRODUCT_TABLE . '.brand_id')
-            ->where(self::PRODUCT_TABLE . '.quantity', ">", 0)
+            ->when($admin, function ($query) {
+                $query->where(self::PRODUCT_TABLE . '.quantity', ">", 0);
+            })
             ->whereNull(self::PRODUCT_TABLE . '.deleted_at')
             ->first();
     }
@@ -116,6 +148,33 @@ class Product extends Model
             ->when($tag_ids[0], function ($query, $searches) {
                 $query->whereIn(self::PRODUCT_TAG_RELATION_TABLE . '.tag_id', $searches);
             });
+    }
+
+    public static function getProductsInAdmin()
+    {
+        $display = self::displayDataInAdmin();
+
+        return DB::table(self::PRODUCT_TABLE)
+            ->select($display)
+            ->leftJoin(self::CATEGORY_TABLE, self::CATEGORY_TABLE . '.id', self::PRODUCT_TABLE . '.category_id')
+            ->join(self::BRAND_TABLE, self::PRODUCT_TABLE . '.brand_id', '=', self::BRAND_TABLE . '.id')
+            ->join(self::SHOP_TABLE, self::BRAND_TABLE . '.shop_id', '=', self::SHOP_TABLE . '.id')
+            ->whereNull(self::PRODUCT_TABLE . '.deleted_at')
+            ->get();
+    }
+
+    public static function getProductsByShopId($shop_id)
+    {
+        $display = self::displayDataInAdmin();
+
+        return DB::table(self::PRODUCT_TABLE)
+            ->select($display)
+            ->leftJoin(self::CATEGORY_TABLE, self::CATEGORY_TABLE . '.id', self::PRODUCT_TABLE . '.category_id')
+            ->join(self::BRAND_TABLE, self::PRODUCT_TABLE . '.brand_id', '=', self::BRAND_TABLE . '.id')
+            ->join(self::SHOP_TABLE, self::BRAND_TABLE . '.shop_id', '=', self::SHOP_TABLE . '.id')
+            ->where(self::SHOP_TABLE . '.id', $shop_id)
+            ->whereNull(self::PRODUCT_TABLE . '.deleted_at')
+            ->get();
     }
 
 }

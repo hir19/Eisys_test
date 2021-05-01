@@ -58,10 +58,6 @@
 
                                 </div>
                             </li>
-                        @else
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('admin.login') }}">{{ __('Login') }}</a>
-                            </li>
                         @endif
                     </ul>
                 </div>

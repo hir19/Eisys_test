@@ -23,6 +23,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public const HOME = '/home';
 
+    public const LOGGED_IN = '/';
 
     /**
      * The path to the "admin" route for your application.

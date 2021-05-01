@@ -15,7 +15,6 @@ class UsersTableSeeder extends Seeder
         User::create([
                 'first_name' => '太郎',
                 'last_name' => '田中',
-                'sex' => 1,
                 'email' => 'user@test.test',
                 'email_verified_at' => date('Y-m-d H:i:s'),
                 'password' => Hash::make('test'),
@@ -31,7 +30,8 @@ class UsersTableSeeder extends Seeder
                 'updated_at' => date('Y-m-d H:i:s'),
         ]);
 
-        factory(User::class, 100)->create();
-        // factory(App\Models\User::class, 1000000)->create();
+        // for ($i=0; $i < 1000; $i++) {
+        //     factory(User::class, 1000)->create();
+        // }
     }
 }
