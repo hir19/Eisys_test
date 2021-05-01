@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Shop;
 
 use App\Http\Controllers\Controller;
-// use App\Http\Requests\Shop\IndexRequest;
 use App\Http\Requests\Shop\DetailRequest;
+use App\Http\Requests\Shop\IndexRequest;
 use App\Services\Shop\ShopService;
 
 class ShopController extends Controller
@@ -17,12 +17,13 @@ class ShopController extends Controller
         $this->shop_service = $shop_service;
     }
 
-    public function Index()
+    public function Index(IndexRequest $request)
     {
-        $products = $this->shop_service
-            ->index();
 
-        return view(('shop.index'), compact('products'));
+        $data = $this->shop_service
+            ->existSearchQuery($request->query());
+
+        return view(('shop.index'), compact('data'));
     }
 
     public function Detail(DetailRequest $request)
@@ -32,5 +33,4 @@ class ShopController extends Controller
 
         return view(('shop.detail'), compact('product'));
     }
-
 }

@@ -17,9 +17,9 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('name');
             $table->integer('category_id')->unsigned();
-            // $table->foreign('category_id')->references('id')->on('category_id')->cascadeOnDelete();
+            // $table->foreign('category_id')->references('id')->on('category')->cascadeOnDelete();
             $table->integer('brand_id')->unsigned();
-            // $table->foreign('brand_id')->references('id')->on('brand_id')->cascadeOnDelete();
+            // $table->foreign('brand_id')->references('id')->on('brand')->cascadeOnDelete();
             $table->integer('price')->default(0);
             $table->integer('quantity')->default(0)->comment('数量');
             $table->string('image_path1')->comment('画像パス');
