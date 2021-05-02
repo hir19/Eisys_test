@@ -5,6 +5,7 @@ namespace App\Services\Admin\Product;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductTagRelation;
 use App\Models\Tag;
 use App\Services\BaseService;
 use Illuminate\Support\Facades\Auth;
@@ -36,11 +37,34 @@ class ProductService extends BaseService
         return $this;
     }
 
-    public static function store($req)
+    public function store($req)
     {
-        Product::storeProduct($req);
+        $this->product = Product::storeProduct($req);
 
-        return;
+        return $this;
+    }
+
+    public function storeTags($tags)
+    {
+        if($tags){
+            $product_id = $this->product->id;
+            foreach($tags as $tag){
+                ProductTagRelation::storeTagRelation($tag, $product_id);
+            }
+        }
+        return $this;
+    }
+
+    public function updateTags($tags, $product_id)
+    {
+        if($tags){
+            ProductTagRelation::ForceDeleteByProductId($product_id);
+            foreach($tags as $tag){
+                ProductTagRelation::storeTagRelation($tag, $product_id);
+            }
+        }
+
+        return $this;
     }
 
     public function selectData()
@@ -54,6 +78,18 @@ class ProductService extends BaseService
         $this->tag_arr = self::moldSelectData($tag_ids);
         $this->category_arr = self::moldSelectData($category_ids);
         $this->brand_arr = self::moldSelectData($brand_id);
+
+        return $this;
+    }
+
+    public function oldTags($product_id)
+    {
+        $arr = ProductTagRelation::getTagIdByProductId($product_id);
+        $tags = [];
+        foreach($arr as $val){
+            $tags[] = $val->tag_id;
+        }
+        $this->old_tags = $tags;
 
         return $this;
     }

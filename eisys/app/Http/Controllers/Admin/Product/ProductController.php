@@ -40,8 +40,9 @@ class ProductController extends Controller
     {
 
         $this->product_service
-            ->uploadImgs($request)
-            ->store($request);
+            // ->uploadImgs($request)
+            ->store($request)
+            ->storeTags($request->tag_ids);
 
         return redirect()->route('admin.product.index');
     }
@@ -50,14 +51,18 @@ class ProductController extends Controller
     {
         $data = $this->product_service
             ->edit($request->product_id)
-            ->selectData();
+            ->selectData()
+            ->oldTags($request->product_id);
 
         return view(('admin.contents.product.edit'), compact('data'));
     }
 
     public function Update(UpdateRequest $request)
     {
-        $this->product_service->update($request);
+
+        $this->product_service
+            ->update($request)
+            ->updateTags($request->tag_ids, $request->product_id);
 
         return redirect()->route('admin.product.index');
     }

@@ -58,19 +58,19 @@
                     <span style="color:red">{{ $errors->first('price') }}</span>
                 </div>
                 <div class="form-group">
-                    <label class="font-weight-normal">ブランド</label>
-                    {{ Form::select('brand_id', $data->brand_arr, [$data->product->brand_id => $data->product->brand_name], ['class' => "form-control select2", 'style' => "width: 100%;", 'id' => 'brand_id', 'data-placeholder' => 'カテゴリー']) }}
-                    <span style="color:red">{{ $errors->first('brand_id') }}</span>
-                </div>
-                <div class="form-group">
                     <label class="font-weight-normal">検索タグ</label>
-                    {{ Form::select('tag_ids[]', $data->tag_arr, null, ['class' => 'select2', 'multiple' => 'multiple', 'style' => "width: 100%;", 'id' => 'tag_ids', 'data-placeholder' => '検索タグ']) }}
+                    {{ Form::select('tag_ids[]', $data->tag_arr, $data->old_tags, ['class' => 'select2', 'multiple' => 'multiple', 'style' => "width: 100%;", 'id' => 'tag_ids', 'data-placeholder' => '検索タグ']) }}
                     <span style="color:red">{{ $errors->first('tag_ids') }}</span>
                 </div>
                 <div class="form-group">
                     <label class="font-weight-normal">カテゴリー</label>
-                    {{ Form::select('category_id', $data->category_arr, [$data->product->category_id => $data->product->category_name], ['class' => "form-control select2", 'style' => "width: 100%;", 'id' => 'category_id', 'data-placeholder' => 'カテゴリー']) }}
+                    {{ Form::select('category_id', $data->category_arr, $data->product->category_id, ['class' => "form-control select2", 'style' => "width: 100%;", 'id' => 'category_id']) }}
                     <span style="color:red">{{ $errors->first('category_id') }}</span>
+                </div>
+                <div class="form-group">
+                    <label class="font-weight-normal">ブランド</label>
+                    {{ Form::select('brand_id', $data->brand_arr, $data->product->brand_id, ['class' => "form-control select2", 'style' => "width: 100%;", 'id' => 'brand_id']) }}
+                    <span style="color:red">{{ $errors->first('brand_id') }}</span>
                 </div>
                 <div class="form-group">
                     <label class="font-weight-normal">説明文</label>

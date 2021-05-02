@@ -65,12 +65,12 @@
                         </div>
                         <div class="form-group">
                             <label class="font-weight-normal">カテゴリー</label>
-                            {{ Form::select('category_id', $select_data->category_arr, null, ['class' => "form-control select2", 'style' => "width: 100%;", 'id' => 'category_id', 'data-placeholder' => 'カテゴリー']) }}
+                            {{ Form::select('category_id', $select_data->category_arr, null, ['class' => "form-control select2", 'style' => "width: 100%;", 'id' => 'category_id', 'placeholder' => 'カテゴリー']) }}
                             <span style="color:red">{{ $errors->first('category_id') }}</span>
                         </div>
                         <div class="form-group">
                             <label class="font-weight-normal">ブランド</label>
-                            {{ Form::select('brand_id', $select_data->brand_arr, null, ['class' => "form-control select2", 'style' => "width: 100%;", 'id' => 'brand_id', 'data-placeholder' => 'カテゴリー']) }}
+                            {{ Form::select('brand_id', $select_data->brand_arr, null, ['class' => "form-control select2", 'style' => "width: 100%;", 'id' => 'brand_id', 'placeholder' => 'ブランド']) }}
                             <span style="color:red">{{ $errors->first('brand_id') }}</span>
                         </div>
                         <div class="form-group">
