@@ -19,9 +19,9 @@ class CreateOrdersTable extends Migration
             // $table->foreign('user_id')->references('id')->on('user')->cascadeOnDelete();
             $table->integer('product_id')->unsigned();
             // $table->foreign('product_id')->references('id')->on('product')->cascadeOnDelete();
-            $table->integer('cart_id')->unsigned();
-            // $table->foreign('cart_id')->references('id')->on('cart_id')->cascadeOnDelete();
             $table->integer('quantity')->default(1);
+            $table->boolean('is_delivered')->default(1);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

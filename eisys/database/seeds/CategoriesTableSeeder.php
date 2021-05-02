@@ -16,5 +16,6 @@ class CategoriesTableSeeder extends Seeder
         Category::create(['id' => 2, 'name' => 'DVD']);
         Category::create(['id' => 3, 'name' => '書籍']);
         Category::create(['id' => 4, 'name' => 'ゲームソフト']);
+        Category::create(['id' => 5, 'name' => 'その他']);
     }
 }

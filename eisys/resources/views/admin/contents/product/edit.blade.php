@@ -30,7 +30,7 @@
 
     <!-- Main content -->
     <div class="content">
-        {{ Form::open(['route' => ['admin.product.update', $data->product->product_id], 'method' => 'put']) }}
+        {{ Form::open(['method' => 'PUT', 'route' => ['admin.product.update', $data->product->product_id]]) }}
         @csrf
         <a href={{ route('admin.product.index') }} class="btn btn-secondary"><i
                 class="fas fa-chevron-left"></i>&ensp;戻る</a>
@@ -49,13 +49,18 @@
                 </div>
                 <div class="form-group">
                     <label class="font-weight-normal">在庫数</label>
-                    {{ Form::text('quantity', $data->product->quantity, ['class' => 'form-control', 'placeholder' => '商品在庫数']) }}
+                    {{ Form::number('quantity', $data->product->quantity, ['class' => 'form-control', 'placeholder' => '商品在庫数']) }}
                     <span style="color:red">{{ $errors->first('quantity') }}</span>
                 </div>
                 <div class="form-group">
                     <label class="font-weight-normal">価格</label>
-                    {{ Form::text('price', $data->product->price, ['class' => 'form-control', 'placeholder' => '価格']) }}
+                    {{ Form::number('price', $data->product->price, ['class' => 'form-control', 'placeholder' => '価格']) }}
                     <span style="color:red">{{ $errors->first('price') }}</span>
+                </div>
+                <div class="form-group">
+                    <label class="font-weight-normal">ブランド</label>
+                    {{ Form::select('brand_id', $data->brand_arr, [$data->product->brand_id => $data->product->brand_name], ['class' => "form-control select2", 'style' => "width: 100%;", 'id' => 'brand_id', 'data-placeholder' => 'カテゴリー']) }}
+                    <span style="color:red">{{ $errors->first('brand_id') }}</span>
                 </div>
                 <div class="form-group">
                     <label class="font-weight-normal">検索タグ</label>
@@ -64,7 +69,7 @@
                 </div>
                 <div class="form-group">
                     <label class="font-weight-normal">カテゴリー</label>
-                    {{ Form::select('category_id', $data->category_arr, null, ['class' => "form-control select2", 'style' => "width: 100%;", 'id' => 'category_id', 'data-placeholder' => 'カテゴリー']) }}
+                    {{ Form::select('category_id', $data->category_arr, [$data->product->category_id => $data->product->category_name], ['class' => "form-control select2", 'style' => "width: 100%;", 'id' => 'category_id', 'data-placeholder' => 'カテゴリー']) }}
                     <span style="color:red">{{ $errors->first('category_id') }}</span>
                 </div>
                 <div class="form-group">

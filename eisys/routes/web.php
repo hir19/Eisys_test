@@ -41,6 +41,12 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function() {
         Route::get('/home', 'ProductController@index')->name('index');
         Route::get('/product/edit/{product_id}', 'ProductController@edit')->name('edit');
         Route::put('/product/update/{product_id}', 'ProductController@update')->name('update');
+        Route::get('/product/create', 'ProductController@create')->name('create');
+        Route::post('/product/store', 'ProductController@store')->name('store');
+    });
+
+        Route::middleware('auth:admin')->namespace('Order')->name('order.')->group(function() {
+        Route::get('/order', 'OrderController@index')->name('index');
     });
 
 });

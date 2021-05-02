@@ -8,10 +8,10 @@ use Faker\Generator as Faker;
 $factory->define(Product::class, function (Faker $faker) {
     return [
         'name' => $faker->lexify('商品名??????'),
-        'category_id' => $faker->numberBetween($min = 1, $max = 4),
+        'category_id' => $faker->numberBetween($min = 1, $max = 5),
         'brand_id' => $faker->numberBetween($min = 1, $max = 5),
         'price' => $faker->numberBetween($min = 100, $max = 10000),
-        'quantity' => $faker->numberBetween($min = 1, $max = 10),
+        'quantity' => $faker->numberBetween($min = 1, $max = 100),
         'image_path1' => '',
         'image_path2' => '',
         'image_path3' => '',

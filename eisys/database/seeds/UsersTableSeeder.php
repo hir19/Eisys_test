@@ -30,6 +30,9 @@ class UsersTableSeeder extends Seeder
                 'updated_at' => date('Y-m-d H:i:s'),
         ]);
 
+        factory(User::class, 50)->create();
+
+
         // for ($i=0; $i < 1000; $i++) {
         //     factory(User::class, 1000)->create();
         // }

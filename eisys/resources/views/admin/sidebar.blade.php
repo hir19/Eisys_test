@@ -11,9 +11,9 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- nav-item -->
+
                 <li class="nav-item">
-                    {{-- <a href="{{ route('') }}" class="nav-link"> --}}
-                    <a class="nav-link">
+                    <a href="{{ route('admin.product.index') }}" class="nav-link">
                         <p>
                             <i class="fas fa-box"></i>
                             商品情報
@@ -22,8 +22,7 @@
                 </li>
 
                 <li class="nav-item">
-                    {{-- <a href="{{ route('') }}" class="nav-link"> --}}
-                    <a class="nav-link">
+                    <a href="{{ route('admin.order.index') }}" class="nav-link">
                         <p>
                             <i class="fas fa-shopping-basket"></i>
                             注文情報

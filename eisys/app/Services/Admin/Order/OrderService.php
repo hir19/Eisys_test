@@ -7,5 +7,10 @@ use App\Services\BaseService;
 
 class OrderService extends BaseService
 {
-    //
+    public function index($shop_id, $keywords)
+    {
+        $orders = Order::getOrdersByShopId($shop_id, $keywords);
+
+        return $orders;
+    }
 }

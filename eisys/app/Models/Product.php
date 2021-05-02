@@ -17,7 +17,7 @@ class Product extends Model
     const TAG_TABLE = 'tags';
     const PRODUCT_TAG_RELATION_TABLE = 'product_tag_relations';
 
-    protected $primaryKey = 'product_id';
+    protected $primaryKey = 'id';
 
     /**
      * The attributes that are mass assignable.
@@ -28,6 +28,8 @@ class Product extends Model
         'name',
         'price',
         'quantity',
+        'category_id',
+        'brand_id',
         'image_path1',
         'image_path2',
         'image_path3',
@@ -150,7 +152,7 @@ class Product extends Model
             });
     }
 
-    public static function getProductsInAdmin()
+    public static function getProductsInAdmin($keywords = null)
     {
         $display = self::displayDataInAdmin();
 
@@ -159,11 +161,14 @@ class Product extends Model
             ->leftJoin(self::CATEGORY_TABLE, self::CATEGORY_TABLE . '.id', self::PRODUCT_TABLE . '.category_id')
             ->join(self::BRAND_TABLE, self::PRODUCT_TABLE . '.brand_id', '=', self::BRAND_TABLE . '.id')
             ->join(self::SHOP_TABLE, self::BRAND_TABLE . '.shop_id', '=', self::SHOP_TABLE . '.id')
+            ->when($keywords, function ($query, $search) {
+                $query->where(self::PRODUCT_TABLE . '.name', 'LIKE', get_sql_like_word($search));
+            })
             ->whereNull(self::PRODUCT_TABLE . '.deleted_at')
             ->get();
     }
 
-    public static function getProductsByShopId($shop_id)
+    public static function getProductsByShopId($shop_id, $keywords = null)
     {
         $display = self::displayDataInAdmin();
 
@@ -172,9 +177,38 @@ class Product extends Model
             ->leftJoin(self::CATEGORY_TABLE, self::CATEGORY_TABLE . '.id', self::PRODUCT_TABLE . '.category_id')
             ->join(self::BRAND_TABLE, self::PRODUCT_TABLE . '.brand_id', '=', self::BRAND_TABLE . '.id')
             ->join(self::SHOP_TABLE, self::BRAND_TABLE . '.shop_id', '=', self::SHOP_TABLE . '.id')
+            ->when($keywords, function ($query, $search) {
+                $query->where(self::PRODUCT_TABLE . '.name', 'LIKE', get_sql_like_word($search));
+            })
             ->where(self::SHOP_TABLE . '.id', $shop_id)
             ->whereNull(self::PRODUCT_TABLE . '.deleted_at')
             ->get();
     }
 
+    public static function updateProduct($req)
+    {
+        return DB::table(self::PRODUCT_TABLE)
+            ->where(self::PRODUCT_TABLE . '.id', $req->product_id)
+            ->update(
+                [
+                    self::PRODUCT_TABLE . '.name' => $req->name,
+                    self::PRODUCT_TABLE . '.quantity' => $req->quantity,
+                    self::PRODUCT_TABLE . '.price' => $req->price,
+                    self::PRODUCT_TABLE . '.description' => $req->description,
+                    self::PRODUCT_TABLE . '.category_id' => $req->category_id,
+                    self::PRODUCT_TABLE . '.brand_id' => $req->brand_id,
+                    ]);
+    }
+
+    public static function storeProduct($req)
+    {
+        return self::create([
+                'name' => $req->name,
+                'quantity' => $req->quantity,
+                'price' => $req->price,
+                'description' => $req->description,
+                'category_id' => $req->category_id,
+                'brand_id' => $req->category_id,
+            ]);
+    }
 }
