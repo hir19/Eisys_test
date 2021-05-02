@@ -22,6 +22,7 @@
                         @else
                             {{ Form::open(['route' => 'cart.add', 'method' => 'POST']) }}
                                 <input type="hidden" name="stock_id" value="{{ $stock->id }}">
+                                @csrf
                                 {{ Form::button('カートに入れる', ['class' => 'imghover', 'type' => 'submit']) }}
                             {{ Form::close() }}
                         @endguest

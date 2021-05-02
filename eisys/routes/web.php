@@ -28,7 +28,7 @@ Route::namespace('Shop')->name('shop.')->group(function() {
 });
 
 Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function() {
-    Route::get('home', 'HomeController@index')->name('home');
+    // Route::get('home', 'HomeController@index')->name('home');
 
     Route::namespace('Auth')->group(function() {
         Route::get('login', 'LoginController@showLoginForm')->name('login');
@@ -38,7 +38,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function() {
 
 
     Route::middleware('auth:admin')->namespace('Product')->name('product.')->group(function() {
-        Route::get('/product', 'ProductController@index')->name('index');
+        Route::get('/home', 'ProductController@index')->name('index');
         Route::get('/product/edit/{product_id}', 'ProductController@edit')->name('edit');
         Route::put('/product/update/{product_id}', 'ProductController@update')->name('update');
     });

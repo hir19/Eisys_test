@@ -27,6 +27,7 @@
             <nav class="navbar navbar-expand navbar-white navbar-light">
                 ログイン中のユーザは{{ Auth::user()->username}}
                 {{ Form::open(['route' => 'admin.product.index', 'method' => 'GET', 'class'=>'form-inline']) }}
+                @csrf
                     <div class="input-group">
                         <!-- keywords form-->
                         {{ Form::text('keywords', null, ['class' => 'form-control form-control-navbar', 'id' => 'keywords', 'placeholder' => '商品名']) }}
