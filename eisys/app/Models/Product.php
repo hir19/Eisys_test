@@ -98,6 +98,23 @@ class Product extends Model
         ];
     }
 
+    private static function displayImgData()
+    {
+        return [
+            self::PRODUCT_TABLE . '.id as product_id',
+            self::PRODUCT_TABLE . '.image_path1',
+            self::PRODUCT_TABLE . '.image_path2',
+            self::PRODUCT_TABLE . '.image_path3',
+            self::PRODUCT_TABLE . '.image_path4',
+            self::PRODUCT_TABLE . '.image_path5',
+            self::PRODUCT_TABLE . '.image_title1',
+            self::PRODUCT_TABLE . '.image_title2',
+            self::PRODUCT_TABLE . '.image_title3',
+            self::PRODUCT_TABLE . '.image_title4',
+            self::PRODUCT_TABLE . '.image_title5',
+        ];
+    }
+
     public static function getAllProducts()
     {
         $display = self::displayData();
@@ -139,24 +156,22 @@ class Product extends Model
             ->where(self::PRODUCT_TABLE . '.quantity', ">", 0)
             ->whereNull(self::PRODUCT_TABLE . '.deleted_at')
             ->when($keywords, function ($query, $search) {
-                var_dump('keyword');
                 $query->where(self::PRODUCT_TABLE . '.name', 'LIKE', get_sql_like_word($search));
             })
             ->when($category_id, function ($query, $search) {
-                var_dump('category_id');
                 $query->where(self::PRODUCT_TABLE . '.category_id', $search);
             })
             ->when($price, function ($query, $search) {
-                var_dump('price');
                 $query->where(self::PRODUCT_TABLE . '.price', "<=", $search);
             });
 
-        // if($tag_ids){
-        //     $count = count($tag_ids);
-        //     for ($i=0; $i < $count; $i++) {
-        //         $product_query->orWhere(self::PRODUCT_TAG_RELATION_TABLE . '.tag_id', $tag_ids[$i]);
-        //     }
-        // }
+        if (is_array($tag_ids) && count($tag_ids) > 0) {
+            $product_query->where(function ($query) use ($tag_ids) {
+                foreach ($tag_ids as $id) {
+                    $query->orWhere(self::PRODUCT_TAG_RELATION_TABLE . '.tag_id', $id);
+                }
+            });
+        };
 
         return $product_query;
     }
@@ -173,8 +188,7 @@ class Product extends Model
             ->when($keywords, function ($query, $search) {
                 $query->where(self::PRODUCT_TABLE . '.name', 'LIKE', get_sql_like_word($search));
             })
-            ->whereNull(self::PRODUCT_TABLE . '.deleted_at')
-            ->get();
+            ->whereNull(self::PRODUCT_TABLE . '.deleted_at');
     }
 
     public static function getProductsByShopId($shop_id, $keywords = null)
@@ -190,8 +204,7 @@ class Product extends Model
                 $query->where(self::PRODUCT_TABLE . '.name', 'LIKE', get_sql_like_word($search));
             })
             ->where(self::SHOP_TABLE . '.id', $shop_id)
-            ->whereNull(self::PRODUCT_TABLE . '.deleted_at')
-            ->get();
+            ->whereNull(self::PRODUCT_TABLE . '.deleted_at');
     }
 
     public static function updateProduct($req)
@@ -219,5 +232,15 @@ class Product extends Model
                 'category_id' => $req->category_id,
                 'brand_id' => $req->category_id,
             ]);
+    }
+
+    public static function targetProductById($product_id)
+    {
+        $display = self::displayImgData();
+
+        return DB::table(self::PRODUCT_TABLE)
+            ->select($display)
+            ->where(self::PRODUCT_TABLE . '.id', $product_id)
+            ->whereNull(self::PRODUCT_TABLE . '.deleted_at');
     }
 }

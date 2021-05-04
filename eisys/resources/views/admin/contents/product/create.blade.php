@@ -98,6 +98,7 @@
                             </span>
                         </label>
                         <br><span style="color:red">※2MB以下の画像ファイルを選択してください。</span>
+                        <br><span style="color:red">※5枚まで一括アップロードできます。</span>
                         <span style="color:red">{{$errors->first('images')}}</span>
                         <span style="color:red">{{$errors->first('images.*')}}</span>
                     </div>

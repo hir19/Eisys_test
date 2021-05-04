@@ -29,7 +29,7 @@
                 @csrf
                     <div class="input-group">
                         <!-- keywords form-->
-                        {{ Form::text('keywords', null, ['class' => 'form-control form-control-navbar', 'id' => 'keywords', 'placeholder' => '購入者']) }}
+                        {{ Form::text('keywords', null, ['class' => 'form-control form-control-navbar', 'id' => 'keywords', 'placeholder' => '購入者email']) }}
                         <span style="color:red">{{ $errors->first('keywords') }}</span>
 
                         <div class="input-group-append">
@@ -38,7 +38,6 @@
                     </div>
                 {{ Form::close() }}
             </nav>
-            ログイン中のユーザは{{ Auth::user()->username}}
             <!-- /.SEARCH AREA -->
         </div>
         <!-- /.card header-->
@@ -65,7 +64,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($orders as $order)
+                    @foreach($data->orders as $order)
                         <tr>
                             <td class="project-state">
                                 {{ $order->user_id }}
@@ -86,6 +85,9 @@
                     @endforeach
                 </tbody>
             </table>
+            <div>
+                {{ $data->orders->links() }}
+            </div>
         </div>
         <!-- /.Main index -->
     </div>

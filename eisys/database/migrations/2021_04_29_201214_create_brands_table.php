@@ -19,6 +19,7 @@ class CreateBrandsTable extends Migration
             $table->integer('shop_id')->unsigned();
             // $table->foreign('shop_id')->references('id')->on('shop')->cascadeOnDelete();
             $table->timestamps();
+            $table->index('shop_id');
         });
     }
 

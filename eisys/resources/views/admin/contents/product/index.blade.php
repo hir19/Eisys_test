@@ -38,7 +38,6 @@
                     </div>
                 {{ Form::close() }}
             </nav>
-            ログイン中のユーザは{{ Auth::user()->username}}
             <a class="btn btn-success float-right" href="{{ route('admin.product.create') }}">
                 <i class="fas fa-plus-circle"></i>&ensp;新規作成
             </a>
@@ -79,7 +78,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($products as $product)
+                    @foreach($data->products as $product)
                         <tr>
                             <td class="project-state">
                                 {{ $product->name }}
@@ -109,7 +108,7 @@
                                     <i class="fas fa-pencil-alt">
                                     </i>&ensp;情報編集
                                 </a>
-                                <a class="btn btn-info btn-sm" href={{ route('admin.product.edit', $product->product_id) }}>
+                                <a class="btn btn-info btn-sm" href={{ route('admin.product.editImg', $product->product_id) }}>
                                     <i class="far fa-images"></i>
                                     </i>&ensp;写真編集
                                 </a>
@@ -118,6 +117,9 @@
                     @endforeach
                 </tbody>
             </table>
+            <div>
+                {{ $data->products->links() }}
+            </div>
         </div>
         <!-- /.Main index -->
     </div>

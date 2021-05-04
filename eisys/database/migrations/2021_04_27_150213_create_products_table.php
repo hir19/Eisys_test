@@ -35,6 +35,7 @@ class CreateProductsTable extends Migration
             $table->string('description')->nullable()->comment('商品説明');
             $table->softDeletes();
             $table->timestamps();
+            $table->index(['id', 'brand_id']);
         });
     }
 

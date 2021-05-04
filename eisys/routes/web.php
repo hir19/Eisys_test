@@ -48,6 +48,10 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function() {
         Route::put('/product/update/{product_id}', 'ProductController@update')->name('update');
         Route::get('/product/create', 'ProductController@create')->name('create');
         Route::post('/product/store', 'ProductController@store')->name('store');
+
+        Route::get('/product/image/edit/{product_id}', 'ProductController@EditImg')->name('editImg');
+        Route::put('/product/image/update/{product_id}', 'ProductController@UpdateImg')->name('updateImg');
+        Route::delete('/product/image/delete/{product_id}', 'ProductController@DeleteImg')->name('deleteImg');
     });
 
         Route::middleware('auth:admin')->namespace('Order')->name('order.')->group(function() {

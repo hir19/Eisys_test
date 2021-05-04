@@ -20,12 +20,14 @@ class ProductService extends BaseService
             $products = Product::getProductsByShopId($shop_id, $keywords);
         }
 
-        return $products;
+        $this->products = $products->paginate(15);
+
+        return $this;
     }
 
-    public function edit($product)
+    public function edit($product_id)
     {
-        $this->product = Product::getProductById($product, 'ADMIN');
+        $this->product = Product::getProductById($product_id, 'ADMIN');
 
         return $this;
     }
@@ -107,47 +109,82 @@ class ProductService extends BaseService
     // 新規作成の時
     public function uploadImgs($request)
     {
-        $files = $request->file('images');
+        //ファイル取得
+        $upload_images = $request->file('images');
 
-        dd($files);
+        if (!empty($upload_images)) {
+            $count = 1;
+            foreach($upload_images as $upload_image){
+                $path = $upload_image->store('product_imgs',"public");
+                $this->product->update([
+                    'image_path'.$count => $path
+                ]);
+                $count ++;
+            }
+        }
 
-        // 保存先ルート
-        $folder = dirname(__FILE__, 5) . '/product_imgs/';
+        return $this;
+    }
 
-        // // 新規フォルダの生成を行う
-        // if (!file_exists($folder)) {
-        //     mkdir($folder, 0777, true);
-        // }
+    public function targetProduct($product_id)
+    {
+        $this->product = Product::targetProductById($product_id);
 
-        // //あったら保存
-        // if (!empty($files)) {
-        //     foreach ($files as $file) {
-        //         $file_name = $file->getClientOriginalName();
-        //         move_uploaded_file($_FILES['images']['tmp_name'][0], $folder . $file_name);
+        return $this;
+    }
 
-        //         if (empty($this->mansion->image_upcoming_file_name1)) {
-        //             $this->mansion->fill([
-        //                 'image_upcoming_file_name1' => $file_name,
-        //             ])->save();
-        //         } elseif (empty($this->mansion->image_upcoming_file_name2)) {
-        //             $this->mansion->fill([
-        //                 'image_upcoming_file_name2' => $file_name,
-        //             ])->save();
-        //         } elseif (empty($this->mansion->image_upcoming_file_name3)) {
-        //             $this->mansion->fill([
-        //                 'image_upcoming_file_name3' => $file_name,
-        //             ])->save();
-        //         } elseif (empty($this->mansion->image_upcoming_file_name4)) {
-        //             $this->mansion->fill([
-        //                 'image_upcoming_file_name4' => $file_name,
-        //             ])->save();
-        //         } elseif (empty($this->mansion->image_upcoming_file_name5)) {
-        //             $this->mansion->fill([
-        //                 'image_upcoming_file_name5' => $file_name,
-        //             ])->save();
-        //         }
-        //     }
-        // }
+    public function targetDeleteImgs($delete_num)
+    {
+        // $upload_image = $request->file('image'.$num);
+        // $this->product->where('image_path'.$delete_num, $image);
+
         // return $this;
     }
+
+    public function updateImg($request)
+    {
+        $is_update_img = true;
+        if($request->file('image1')){
+            $num = 1;
+        } elseif($request->file('image2')) {
+            $num = 2;
+        } elseif($request->file('image3')) {
+            $num = 3;
+        } elseif($request->file('image4')) {
+            $num = 4;
+        } elseif($request->file('image5')) {
+            $num = 5;
+        } else {
+            $is_update_img = false;
+        }
+
+        if($is_update_img){
+            $upload_image = $request->file('image'.$num);
+        }
+
+        if (!empty($upload_image)) {
+            $path = $upload_image->store('product_imgs',"public");
+                $this->product->update([
+                    'image_path'.$num => $path,
+                ]);
+        }
+
+        $this->product->update([
+            'image_title1' => $request->name1,
+            'image_title2' => $request->name2,
+            'image_title3' => $request->name3,
+            'image_title4' => $request->name4,
+            'image_title5' => $request->name5,
+        ]);
+
+        return $this;
+    }
+
+    public function deleteImg()
+    {
+        $this->product->delete();
+
+        return $this;
+    }
+
 }

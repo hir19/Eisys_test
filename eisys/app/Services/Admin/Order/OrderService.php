@@ -10,7 +10,8 @@ class OrderService extends BaseService
     public function index($shop_id, $keywords)
     {
         $orders = Order::getOrdersByShopId($shop_id, $keywords);
+        $this->orders = $orders->paginate(15);
 
-        return $orders;
+        return $this;
     }
 }

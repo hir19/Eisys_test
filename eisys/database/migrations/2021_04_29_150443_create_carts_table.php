@@ -21,6 +21,7 @@ class CreateCartsTable extends Migration
             // $table->foreign('product_id')->references('id')->on('product')->cascadeOnDelete();
             $table->integer('quantity')->default(1)->comment('数量');
             $table->timestamps();
+            $table->index(['product_id', 'user_id']);
         });
     }
 

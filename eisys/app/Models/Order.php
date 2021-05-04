@@ -75,7 +75,6 @@ class Order extends Model
             })
             ->where(self::SHOP_TABLE . '.id', $shop_id)
             ->whereNull(self::ORDER_TABLE . '.deleted_at')
-            ->orderBy(self::USER_TABLE . '.id', 'DESC')//id大きい順
-            ->get();
+            ->orderBy(self::USER_TABLE . '.id', 'DESC');
     }
 }

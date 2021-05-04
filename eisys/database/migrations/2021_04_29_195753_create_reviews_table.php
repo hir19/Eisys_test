@@ -22,6 +22,8 @@ class CreateReviewsTable extends Migration
             $table->integer('star')->default(1);
             $table->string('comment')->nullable();
             $table->timestamps();
+            $table->index(['product_id', 'user_id']);
+
         });
     }
 

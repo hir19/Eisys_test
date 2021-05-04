@@ -34,6 +34,8 @@ class StoreRequest extends FormRequest
             // 'tag_ids' => 'array',
             // 'tag_ids.*' => 'exists:tags,id|distinct',
             'description' => 'string|nullable',
+            'images' => 'array',
+            'images.*' => 'mimes:png,jpeg,jpg,gif|distinct'
         ];
     }
 

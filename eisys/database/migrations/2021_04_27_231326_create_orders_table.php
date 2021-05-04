@@ -23,6 +23,7 @@ class CreateOrdersTable extends Migration
             $table->boolean('is_delivered')->default(1);
             $table->softDeletes();
             $table->timestamps();
+            $table->index(['product_id', 'user_id']);
         });
     }
 

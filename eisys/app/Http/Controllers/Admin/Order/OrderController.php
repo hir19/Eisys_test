@@ -21,9 +21,10 @@ class OrderController extends Controller
     {
 
         $shop_id = Auth::user()->shop_id;
-        $orders = $this->order_service->index($shop_id, $request->keywords);
+        $data = $this->order_service
+            ->index($shop_id, $request->keywords);
 
-        return view(('admin.contents.order.index'), compact('orders'));
+        return view(('admin.contents.order.index'), compact('data'));
     }
 
 }

@@ -7,6 +7,9 @@ use App\Http\Requests\Admin\Product\EditRequest;
 use App\Http\Requests\Admin\Product\UpdateRequest;
 use App\Http\Requests\Admin\Product\IndexRequest;
 use App\Http\Requests\Admin\Product\StoreRequest;
+use App\Http\Requests\Admin\Product\EditImgRequest;
+use App\Http\Requests\Admin\Product\UpdateImgRequest;
+use App\Http\Requests\Admin\Product\DeleteImgRequest;
 use App\Services\Admin\Product\ProductService;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,9 +26,9 @@ class ProductController extends Controller
     public function Index(IndexRequest $request)
     {
         $shop_id = Auth::user()->shop_id;
-        $products = $this->product_service->index($shop_id, $request->keywords);
+        $data = $this->product_service->index($shop_id, $request->keywords);
 
-        return view(('admin.contents.product.index'), compact('products'));
+        return view(('admin.contents.product.index'), compact('data'));
     }
 
     public function Create()
@@ -40,8 +43,8 @@ class ProductController extends Controller
     {
 
         $this->product_service
-            // ->uploadImgs($request)
             ->store($request)
+            ->uploadImgs($request)
             ->storeTags($request->tag_ids);
 
         return redirect()->route('admin.product.index');
@@ -70,6 +73,35 @@ class ProductController extends Controller
     public function Delete()
     {
         //
+    }
+
+    public function EditImg(EditImgRequest $request)
+    {
+        $data = $this->product_service
+            ->edit($request->product_id);
+
+        return view(('admin.contents.product.editImg'), compact('data'));
+    }
+
+    public function UpdateImg(UpdateImgRequest $request)
+    {
+        $data = $this->product_service
+            ->targetProduct($request->product_id)
+            ->updateImg($request)
+            ->edit($request->product_id);
+
+        return view(('admin.contents.product.editImg'), compact('data'));
+    }
+
+    public function DeleteImg(DeleteImgRequest $request)
+    {
+
+        dd('delete');
+        $this->product_service
+            ->targetProduct($request->product_id)
+            ->deleteImg($request);
+
+        return back()->with('result'.$request->delete_num, '画像を削除しました');
     }
 
 }

@@ -20,6 +20,7 @@ class CreateProductTagRelationsTable extends Migration
             $table->integer('tag_id')->unsigned();
             // $table->foreign('tag_id')->references('id')->on('tag')->cascadeOnDelete();
             $table->timestamps();
+            $table->index(['product_id', 'tag_id']);
         });
     }
 
