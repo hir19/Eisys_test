@@ -131,7 +131,7 @@ class Product extends Model
         $product_query = Product::query();
         $display = self::displayData();
 
-        return $product_query->select($display)
+        $product_query->select($display)
             ->join(self::PRODUCT_TAG_RELATION_TABLE, self::PRODUCT_TABLE . '.id', '=', self::PRODUCT_TAG_RELATION_TABLE . '.product_id')
             ->join(self::TAG_TABLE, self::PRODUCT_TAG_RELATION_TABLE . '.tag_id', '=', self::TAG_TABLE . '.id')
             ->leftJoin(self::CATEGORY_TABLE, self::CATEGORY_TABLE . '.id', self::PRODUCT_TABLE . '.category_id')
@@ -139,17 +139,26 @@ class Product extends Model
             ->where(self::PRODUCT_TABLE . '.quantity', ">", 0)
             ->whereNull(self::PRODUCT_TABLE . '.deleted_at')
             ->when($keywords, function ($query, $search) {
+                var_dump('keyword');
                 $query->where(self::PRODUCT_TABLE . '.name', 'LIKE', get_sql_like_word($search));
             })
             ->when($category_id, function ($query, $search) {
+                var_dump('category_id');
                 $query->where(self::PRODUCT_TABLE . '.category_id', $search);
             })
             ->when($price, function ($query, $search) {
+                var_dump('price');
                 $query->where(self::PRODUCT_TABLE . '.price', "<=", $search);
-            })
-            ->when($tag_ids[0], function ($query, $searches) {
-                $query->whereIn(self::PRODUCT_TAG_RELATION_TABLE . '.tag_id', $searches);
             });
+
+        // if($tag_ids){
+        //     $count = count($tag_ids);
+        //     for ($i=0; $i < $count; $i++) {
+        //         $product_query->orWhere(self::PRODUCT_TAG_RELATION_TABLE . '.tag_id', $tag_ids[$i]);
+        //     }
+        // }
+
+        return $product_query;
     }
 
     public static function getProductsInAdmin($keywords = null)

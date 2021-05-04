@@ -9,7 +9,7 @@ class ProductTagRelation extends Model
 {
     const PRODUCT_TAG_RELATION_TABLE = 'product_tag_relations';
 
-    protected $primaryKey = 'product_tag_relation_id';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'tag_id',

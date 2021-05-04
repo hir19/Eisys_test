@@ -25,7 +25,7 @@ class RemoveRequest extends FormRequest
     public function rules()
     {
         return [
-            'product_id' => 'numeric',
+            // 'cart_id' => 'numeric|required',
         ];
     }
 

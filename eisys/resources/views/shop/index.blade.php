@@ -1,5 +1,5 @@
 @extends('layouts.app')
-<script src="{{ asset('js/addApp.js') }}" defer></script>
+<script src="{{ asset('js/app.js') }}" defer></script>
 
 @section('content')
     <div class="container-fluid">
@@ -7,18 +7,16 @@
             <div class="mx-auto" style="max-width:1200px">
                 <div class="search-container">
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-12">
                             <form class="form-inline">
-                                <div class="form-group">
-                                    {{ Form::open(['route' => 'shop.index', 'method' => 'GET']) }}
-                                    @csrf
-                                    {{ Form::text('keywords', $data->oldQuery['keywords'], ['class' => '', 'id' => 'keywords', 'placeholder' => 'キーワード']) }}
-                                    {{ Form::select('category_id', [1 => 'DVD', 2 => '本', 3 => 'ゲーム'], $data->oldQuery['category_id'], ['class' => "form-control select2", 'style' => "width: 10%;", 'id' => 'category_id', 'data-placeholder' => 'カテゴリー']) }}
-                                    {{ Form::select('tag_ids[]', [1 => 'タグ1', 2 => 'タグ2', 3 => 'タグ3'], '', ['class' => 'select2', 'multiple' => 'multiple', 'style' => "width: 10%;", 'id' => 'tag_ids', 'data-placeholder' => '検索タグ']) }}
-                                    {{ Form::select('price', [1000 => '1000以下', 2000 => '2000以下', 3000 => '3000以下'], $data->oldQuery['price'], ['class' => '', 'id' => 'price', 'placeholder' => '金額']) }}
-                                    {{ Form::button('検索', ['class' => 'imghover', 'type' => 'submit']) }}
-                                    {{ Form::close() }}
-                                </div>
+                                {{ Form::open(['route' => 'shop.index', 'method' => 'GET']) }}
+                                @csrf
+                                {{ Form::text('keywords', $data->oldQuery['keywords'], ['class' => '', 'id' => 'keywords', 'style' => "width: 30%;", 'placeholder' => 'キーワード']) }}
+                                {{ Form::select('category_id', $data->category_arr, $data->oldQuery['category_id'], ['class' => "form-control select2", 'style' => "width: 20%;", 'id' => 'category_id', 'placeholder' => 'カテゴリー']) }}
+                                {{ Form::select('tag_ids[]', $data->tag_arr, '', ['class' => 'select2', 'multiple' => 'multiple', 'style' => "width: 30%;", 'id' => 'tag_ids', 'data-placeholder' => '検索タグ']) }}
+                                {{ Form::select('price', $data->price_arr, $data->oldQuery['price'], ['class' => '', 'id' => 'price', 'placeholder' => '金額']) }}
+                                {{ Form::button('検索', ['class' => 'imghover', 'type' => 'submit']) }}
+                                {{ Form::close() }}
                             </form>
                         </div>
                     </div>

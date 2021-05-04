@@ -17,13 +17,16 @@
                                 class="incart"><br>
                             商品説明：{{ $product->description }}
                         </div>
+                        {{ session('result') }}
                         @guest
-                            <div>購入するにはログイン画面</div>
+                            {{ Form::open(['method' => 'GET', 'route' => 'login']) }}
+                                {{ Form::button('<i class="fas fa-sign-in-alt"></i>>&ensp;購入される方はログイン', ['class' => 'btn btn-success imghover', 'type' => 'submit']) }}
+                            {{ Form::close() }}
                         @else
-                            {{ Form::open(['route' => 'cart.add', 'method' => 'POST']) }}
-                                <input type="hidden" name="stock_id" value="{{ $stock->id }}">
-                                @csrf
-                                {{ Form::button('カートに入れる', ['class' => 'imghover', 'type' => 'submit']) }}
+                            {{ Form::open(['method' => 'POST', 'route' => 'shop.cart.add']) }}
+                                {{ Form::hidden('product_id', $product->product_id) }}
+                                {{ Form::number('quantity', 1, ['class' => '', 'id' => 'quantity', 'max'=>$product->quantity, 'min'=>1]) }}
+                                {{ Form::button('<i class="fas fa-cart-plus"></i>&ensp;カートに入れる', ['class' => 'btn btn-success imghover', 'type' => 'submit']) }}
                             {{ Form::close() }}
                         @endguest
                     </div>

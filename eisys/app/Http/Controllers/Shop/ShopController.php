@@ -21,6 +21,7 @@ class ShopController extends Controller
     {
 
         $data = $this->shop_service
+            ->selectData()
             ->existSearchQuery($request->query());
 
         return view(('shop.index'), compact('data'));

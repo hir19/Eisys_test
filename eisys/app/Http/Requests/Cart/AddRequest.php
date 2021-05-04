@@ -4,7 +4,7 @@ namespace App\Http\Requests\Cart;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RemoveRequest extends FormRequest
+class AddRequest extends FormRequest
 {
 
     /**
@@ -25,7 +25,7 @@ class RemoveRequest extends FormRequest
     public function rules()
     {
         return [
-            'product_id' => 'numeric',
+            'product_id' => 'numeric|required',
         ];
     }
 

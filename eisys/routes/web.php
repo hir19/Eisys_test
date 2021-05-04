@@ -24,7 +24,12 @@ Auth::routes();
 Route::namespace('Shop')->name('shop.')->group(function() {
     Route::get('/', 'ShopController@index')->name('index');
     Route::get('/detail/{product_id}', 'ShopController@detail')->name('detail');
-    Route::get('/cart', 'ShopController@cart')->name('cart')->middleware('auth');
+    Route::middleware('auth')->name('cart.')->group(function() {
+        Route::get('/cart', 'CartController@index')->name('index');
+        Route::post('/cart', 'CartController@add')->name('add');
+        Route::put('/cart/{cart_id}', 'CartController@change')->name('change');
+        Route::delete('/cart/{cart_id}', 'CartController@remove')->name('remove');
+    });
 });
 
 Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function() {

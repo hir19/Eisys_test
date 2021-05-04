@@ -3,6 +3,8 @@
 namespace App\Services\Shop;
 
 use App\Models\Product;
+use App\Models\Category;
+use App\Models\Tag;
 use App\Services\BaseService;
 
 class ShopService extends BaseService
@@ -63,4 +65,27 @@ class ShopService extends BaseService
         $product = Product::getProductById($product_id);
         return $product;
     }
+
+    public function selectData()
+    {
+        $tag_ids = Tag::getAllTags();
+        $category_ids = Category::getAllCategories();
+
+        $this->tag_arr = self::moldSelectData($tag_ids);
+        $this->category_arr = self::moldSelectData($category_ids);
+        $this->price_arr = [1000 => '1000以下', 2000 => '2000以下', 3000 => '3000以下', 4000 => '4000以下', 5000 => '5000以下', 10000 => '10000以下'];
+
+        return $this;
+    }
+
+    private static function moldSelectData($data)
+    {
+        $arr = [];
+        foreach ($data as $str) {
+            $arr += [$str->id => $str->name];
+        }
+
+        return $arr;
+    }
+
 }

@@ -22,6 +22,15 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="{{asset("admin/plugins/fontawesome-free/css/all.min.css")}}" />
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{{asset("admin/plugins/select2/css/select2.min.css")}}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{asset("admin/dist/css/adminlte.min.css")}}" />
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet" />
 </head>
 
 <body>
@@ -56,22 +65,20 @@
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
+                            <li class="nav-item">
+                                <a class="nav-link" href={{ route('shop.cart.index') }}>
+                                    <i class="fas fa-shopping-basket"></i>
+                                    {{ __('カート') }}
                                 </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                            document.getElementById('logout-form').submit();">
-                                        {{ __('ログアウト') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('logout') }}" class="nav-link"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <i class="fas fa-sign-out-alt">ログアウト</i>
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
                             </li>
                         @endguest
                     </ul>
