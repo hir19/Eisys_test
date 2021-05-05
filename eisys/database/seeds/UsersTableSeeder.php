@@ -2,6 +2,7 @@
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Faker\Generator as Faker;
 
 class UsersTableSeeder extends Seeder
 {
@@ -10,7 +11,7 @@ class UsersTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(Faker $faker)
     {
         User::create([
                 'first_name' => '太郎',
@@ -30,11 +31,22 @@ class UsersTableSeeder extends Seeder
                 'updated_at' => date('Y-m-d H:i:s'),
         ]);
 
-        factory(User::class, 50)->create();
-
-
-        // for ($i=0; $i < 1000; $i++) {
-        //     factory(User::class, 1000)->create();
-        // }
+        for($i = 1; $i <= 10000; $i++){
+            User::create([
+                'first_name' => $faker->firstName,
+                'last_name' => $faker->lastName,
+                'email' => "user".$i."@test.test",
+                'email_verified_at' => now(),
+                'password' => $faker->password,
+                'points' => $faker->numberBetween($min = 0, $max = 9999),
+                'phone' => '12345678901',
+                'address1' => 'address1',
+                'address2' => 'address2',
+                'zip_code' => $faker->postcode,
+                'state' => '埼玉',
+                'city' => 'さいたま',
+                'country' => '日本',
+            ]);
+        }
     }
 }
