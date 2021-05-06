@@ -19,7 +19,7 @@ class AdminsTableSeeder extends Seeder
                 'username' => 'system',
                 'email' => 'admin@test.test',
                 'email_verified_at' => date('Y-m-d H:i:s'),
-                'password' => Hash::make('test1'),
+                'password' => Hash::make('system'),
                 'role_id' => 1,
                 'shop_id' => 0,
                 'created_at' => date('Y-m-d H:i:s'),
@@ -33,9 +33,9 @@ class AdminsTableSeeder extends Seeder
                 'username' => 'admin',
                 'email' => 'admin@test.test',
                 'email_verified_at' => date('Y-m-d H:i:s'),
-                'password' => Hash::make('test1'),
+                'password' => Hash::make('admin'),
                 'role_id' => 2,
-                'shop_id' => 1,
+                'shop_id' => 0,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -43,13 +43,27 @@ class AdminsTableSeeder extends Seeder
 
         DB::table('admins')->insert([
             [
-                'name' => 'アニメイト',
-                'username' => 'animete',
-                'email' => 'animete@test.test',
+                'name' => 'shop1',
+                'username' => 'shop1',
+                'email' => 'shop1@test.test',
                 'email_verified_at' => date('Y-m-d H:i:s'),
-                'password' => Hash::make('test1'),
+                'password' => Hash::make('shop1'),
                 'role_id' => 3,
                 'shop_id' => 2,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+        ]);
+
+        DB::table('admins')->insert([
+            [
+                'name' => 'shop2',
+                'username' => 'shop2',
+                'email' => 'shop2@test.test',
+                'email_verified_at' => date('Y-m-d H:i:s'),
+                'password' => Hash::make('shop2'),
+                'role_id' => 3,
+                'shop_id' => 3,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],

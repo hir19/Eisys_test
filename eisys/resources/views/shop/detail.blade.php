@@ -32,6 +32,10 @@
                         </div>
                     </div>
                 </div>
+                    <a class="btn btn-info imghover" href="{{ url('/') }}">
+                        <i class="fas fa-arrow-left">商品一覧へ戻る</i>
+                    </a>
+                </div>
             </div>
         </div>
     </div>

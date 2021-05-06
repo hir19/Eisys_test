@@ -38,6 +38,7 @@
                     </div>
                 {{ Form::close() }}
             </nav>
+        <p>検索ヒット数：{{ $data->orders->total() }}件</p>
             <!-- /.SEARCH AREA -->
         </div>
         <!-- /.card header-->

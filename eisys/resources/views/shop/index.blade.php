@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 <h1 style="color:#555555; text-align:center; font-size:1.2em; padding:24px 0px; font-weight:bold;">商品一覧</h1>
-                <p>検索ヒット数：{{ $data->total }}</p>
+                <p>検索ヒット数：{{ $data->products->total() }}件</p>
                 <div>
                     <div class="d-flex flex-row flex-wrap">
                         @foreach ($data->products as $product)

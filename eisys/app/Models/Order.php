@@ -77,4 +77,21 @@ class Order extends Model
             ->whereNull(self::ORDER_TABLE . '.deleted_at')
             ->orderBy(self::USER_TABLE . '.id', 'DESC');
     }
+
+    public static function getAllOrdersBySearch($keywords = null)
+    {
+        $display = self::displayDataInAdmin();
+
+        return DB::table(self::ORDER_TABLE)
+            ->select($display)
+            ->leftJoin(self::USER_TABLE, self::USER_TABLE . '.id', self::ORDER_TABLE . '.user_id')
+            ->leftJoin(self::PRODUCT_TABLE, self::PRODUCT_TABLE . '.id', self::ORDER_TABLE . '.product_id')
+            ->join(self::BRAND_TABLE, self::PRODUCT_TABLE . '.brand_id', '=', self::BRAND_TABLE . '.id')
+            ->join(self::SHOP_TABLE, self::BRAND_TABLE . '.shop_id', '=', self::SHOP_TABLE . '.id')
+            ->when($keywords, function ($query, $search) {
+                $query->where(self::USER_TABLE . '.email', 'LIKE', get_sql_like_word($search));
+            })
+            ->whereNull(self::ORDER_TABLE . '.deleted_at')
+            ->orderBy(self::USER_TABLE . '.id', 'DESC');
+    }
 }

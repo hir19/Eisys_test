@@ -15,12 +15,12 @@
         "laravel/framework": "^7.29",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^2.4",
-        "laravelcollective/html": "^6.2"
+        "laravelcollective/html": "^6.2",
+        "fakerphp/faker": "^1.9.1"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.5",
         "facade/ignition": "^2.0",
-        "fakerphp/faker": "^1.9.1",
         "mockery/mockery": "^1.3.1",
         "nunomaduro/collision": "^4.3",
         "phpunit/phpunit": "^8.5.8|^9.3.3"
@@ -62,13 +62,8 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
         ],
-        "post-install-cmd": [
-            "Illuminate\\Foundation\\ComposerScripts::postInstall",
-            "ssh-keygen -t rsa -b 4096 -f ./storage/id_rsa && mv ./storage/id_rsa ./storage/oauth-private.key && mv ./storage/id_rsa.pub ./storage/oauth-public.key",
-            "@php artisan clear-compiled",
-            "@php artisan optimize",
-            "@php artisan migrate --force",
-            "@php artisan passport:install --force"
+        "compile": [
+            "@php -r \"file_exists('.env') || copy('.env.heroku', '.env');\""
         ]
     }
 }

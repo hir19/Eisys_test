@@ -13,9 +13,9 @@ class BrandsTableSeeder extends Seeder
     public function run()
     {
         Brand::create(['id' => 1, 'shop_id'=>1, 'name' => 'IOSYS']);
-        Brand::create(['id' => 2, 'shop_id'=>1, 'name' => 'cygamas']);
+        Brand::create(['id' => 2, 'shop_id'=>1, 'name' => 'cygames']);
         Brand::create(['id' => 3, 'shop_id'=>2, 'name' => 'IOSYS']);
-        Brand::create(['id' => 4, 'shop_id'=>2, 'name' => 'cygamas']);
+        Brand::create(['id' => 4, 'shop_id'=>2, 'name' => 'cygames']);
         Brand::create(['id' => 5, 'shop_id'=>2, 'name' => 'sumzap']);
 
     }

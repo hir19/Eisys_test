@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Customs\CustomDate;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
@@ -219,6 +220,7 @@ class Product extends Model
                     self::PRODUCT_TABLE . '.description' => $req->description,
                     self::PRODUCT_TABLE . '.category_id' => $req->category_id,
                     self::PRODUCT_TABLE . '.brand_id' => $req->brand_id,
+                    self::PRODUCT_TABLE . '.updated_at' => CustomDate::now(),
                     ]);
     }
 

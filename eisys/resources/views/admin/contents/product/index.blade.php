@@ -38,6 +38,7 @@
                     </div>
                 {{ Form::close() }}
             </nav>
+            <p>検索ヒット数：{{ $data->products->total() }}件</p>
             <a class="btn btn-success float-right" href="{{ route('admin.product.create') }}">
                 <i class="fas fa-plus-circle"></i>&ensp;新規作成
             </a>

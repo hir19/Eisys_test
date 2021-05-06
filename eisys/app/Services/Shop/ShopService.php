@@ -44,8 +44,7 @@ class ShopService extends BaseService
             $product_query = self::index();
         }
 
-        $this->total = $product_query->count();
-        $this->products = $product_query->paginate(15);
+        $this->products = $product_query->paginate(30);
 
         return $this;
     }

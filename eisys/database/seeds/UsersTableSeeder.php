@@ -31,22 +31,28 @@ class UsersTableSeeder extends Seeder
                 'updated_at' => date('Y-m-d H:i:s'),
         ]);
 
-        for($i = 1; $i <= 10000; $i++){
-            User::create([
-                'first_name' => $faker->firstName,
-                'last_name' => $faker->lastName,
-                'email' => "user".$i."@test.test",
-                'email_verified_at' => now(),
-                'password' => $faker->password,
-                'points' => $faker->numberBetween($min = 0, $max = 9999),
-                'phone' => '12345678901',
-                'address1' => 'address1',
-                'address2' => 'address2',
-                'zip_code' => $faker->postcode,
-                'state' => '埼玉',
-                'city' => 'さいたま',
-                'country' => '日本',
-            ]);
+        $i=0;
+        while ($i < 2000) {
+            $arr = [];
+            for($j = 0; $j < 500; ++$j){
+                $arr[] = [
+                    'first_name' => 'first'.$i,
+                    'last_name' => 'last'.$i,
+                    'email' => "user".$i.'a'.$j."@test.test",
+                    'email_verified_at' => now(),
+                    'password' => "pass",
+                    'points' => $faker->numberBetween($min = 0, $max = 9999),
+                    'phone' => '12345678901',
+                    'address1' => 'address1',
+                    'address2' => 'address2',
+                    'zip_code' => '1234567',
+                    'state' => '埼玉',
+                    'city' => 'さいたま',
+                    'country' => '日本',
+                ];
+            }
+            User::insert($arr);
+            ++$i;
         }
     }
 }
