@@ -54,8 +54,12 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function() {
         Route::delete('/product/image/delete/{product_id}', 'ProductController@DeleteImg')->name('deleteImg');
     });
 
-        Route::middleware('auth:admin')->namespace('Order')->name('order.')->group(function() {
+    Route::middleware('auth:admin')->namespace('Order')->name('order.')->group(function() {
         Route::get('/order', 'OrderController@index')->name('index');
+    });
+
+    Route::middleware('auth:admin')->namespace('User')->name('user.')->group(function() {
+        Route::get('/user', 'UserController@index')->name('index');
     });
 
 });

@@ -7,7 +7,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6 mb-3">
-                <h1>注文情報</h1>
+                <h1>お客様情報</h1>
             </div>
             <!-- /.col -->
         </div>
@@ -25,11 +25,11 @@
         <div class="card-header">
             <!-- SEARCH AREA -->
             <nav class="navbar navbar-expand navbar-white navbar-light">
-                {{ Form::open(['route' => 'admin.order.index', 'method' => 'GET', 'class'=>'form-inline']) }}
+                {{ Form::open(['route' => 'admin.user.index', 'method' => 'GET', 'class'=>'form-inline']) }}
                 @csrf
                     <div class="input-group">
                         <!-- keywords form-->
-                        {{ Form::text('keywords', null, ['class' => 'form-control form-control-navbar', 'id' => 'keywords', 'placeholder' => '購入者email']) }}
+                        {{ Form::text('keywords', null, ['class' => 'form-control form-control-navbar', 'id' => 'keywords', 'placeholder' => 'お客様メールアドレス']) }}
                         <span style="color:red">{{ $errors->first('keywords') }}</span>
 
                         <div class="input-group-append">
@@ -38,7 +38,7 @@
                     </div>
                 {{ Form::close() }}
             </nav>
-        <p>検索ヒット数：{{ $data->orders->total() }}件</p>
+        <p>検索ヒット数：{{ $data->users->total() }}件</p>
             <!-- /.SEARCH AREA -->
         </div>
         <!-- /.card header-->
@@ -48,46 +48,46 @@
                 <thead>
                     <tr>
                         <th style="width: 10%">
-                            購入者ID
+                            ユーザID
                         </th>
                         <th style="width: 10%">
                             メールアドレス
                         </th>
                         <th style="width: 10%">
-                            商品名
+                            苗字
                         </th>
                         <th style="width: 10%">
-                            個数
+                            名前
                         </th>
                         <th style="width: 10%">
-                            購入日
+                            登録日
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($data->orders as $order)
+                    @foreach($data->users as $user)
                         <tr>
                             <td class="project-state">
-                                {{ $order->user_id }}
+                                {{ $user->user_id }}
                             </td>
                             <td class="project-state">
-                                {{ $order->email }}
+                                {{ $user->email }}
                             </td>
                             <td class="project-state">
-                                {{ $order->product_name }}
+                                {{ $user->last_name }}
                             </td>
                             <td class="project-state">
-                                {{ $order->quantity }}
+                                {{ $user->first_name }}
                             </td>
                             <td class="project-state">
-                                {{ $order->created_at }}
+                                {{ $user->created_at }}
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
             <div>
-                {{ $data->orders->links() }}
+                {{ $data->users->links() }}
             </div>
         </div>
         <!-- /.Main index -->

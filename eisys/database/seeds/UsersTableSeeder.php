@@ -49,6 +49,8 @@ class UsersTableSeeder extends Seeder
                     'state' => '埼玉',
                     'city' => 'さいたま',
                     'country' => '日本',
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s'),
                 ];
             }
             User::insert($arr);

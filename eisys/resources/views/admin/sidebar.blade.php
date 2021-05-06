@@ -29,6 +29,18 @@
                         </p>
                     </a>
                 </li>
+
+                @if(Auth::User()->role_id == 1)
+                <li class="nav-item">
+                    <a href="{{ route('admin.user.index') }}" class="nav-link">
+                        <p>
+                            <i class="fas fa-users"></i>
+                            お客様情報
+                        </p>
+                    </a>
+                </li>
+                @endif
+
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
